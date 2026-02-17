@@ -8,8 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => res.json({ ok: true, message: "API running" }));
 
+//Rutas del Login 
 app.use("/auth", authRoutes);
 
 module.exports = app;
