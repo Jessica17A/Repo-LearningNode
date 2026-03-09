@@ -1,16 +1,38 @@
 const Producto = require("../models/Producto");
 
-// CREAR PRODUCTO
-exports.createProducto = async (req, res) => {
+// Buscar productos
+const obtenerProductos = async (req, res) => {
   try {
-    const nuevoProducto = await Producto.create(req.body);
 
-    return res.status(201).json(nuevoProducto);
+    const productos = await Producto.find();
+
+    res.json(productos);
 
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al crear el producto",
-      error: error.message
-    });
+
+    res.status(500).json({ mensaje: "Error al obtener productos" });
+
   }
+};
+
+// Crear producto
+const crearProducto = async (req, res) => {
+  try {
+
+    const nuevoProducto = new Producto(req.body);
+
+    const productoGuardado = await nuevoProducto.save();
+
+    res.status(201).json(productoGuardado);
+
+  } catch (error) {
+
+    res.status(400).json({ mensaje: "Error al crear producto" });
+
+  }
+};
+
+module.exports = {
+  obtenerProductos,
+  crearProducto
 };
